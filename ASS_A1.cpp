@@ -1,34 +1,43 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
-
-int firstzeroindex(int arr[], int n) {
-    // Function to find the index of the first zero
-    for (int i = 0; i < n; i++) {
-        if (arr[i] == 0) {
-            return i;
+int findFirstZero(int arr[], int n) 
+{
+    int low = 0, high = n - 1, first_Zero_Index = -1;
+    while (low <= high) 
+	{
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == 0) 
+		{
+            first_Zero_Index = mid;   
+            high = mid - 1;         
+        } 
+		else 
+		{
+            low = mid + 1;
         }
     }
-    return -1;
+    return first_Zero_Index; 
 }
-
-int main() {
-    int n;
-    cout << "Enter the number of elements in the array: ";
+int count_Zeroes(int arr[], int n)
+{
+    int first_Zero_Index = findFirstZero(arr, n);
+	if (first_Zero_Index == -1) 
+	{
+        return 0;
+    }
+    return n - first_Zero_Index;
+}
+int main() 
+{
+	int n;
+    cout << "Enter the size of the array: ";
     cin >> n;
-
-    int arr[n]; // Declare the array with size n
-
-    cout << "Enter the elements (0 or 1) of the array: " << endl;
-    for (int i = 0; i < n; i++) {
+    int arr[n];
+    cout << "Enter the elements of the array (1s followed by 0s): ";
+    for (int i = 0; i < n; i++) 
+	{
         cin >> arr[i];
     }
-
-    int x = firstzeroindex(arr, n);
-    if (x == -1) {
-        cout << "Count of zero is 0" << endl;
-    } else {
-        cout << "Count of zero is " << n - x << endl;
-    }
-
-    return 0;
+    cout << "Number of zeros: " << count_Zeroes(arr, n) << endl;
+	return 0;
 }
